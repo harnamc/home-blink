@@ -1,15 +1,15 @@
 [Unit]
-Description=Home Blink Service (User Service)
+Description=Home Blink Python Service
 After=network.target
 
 [Service]
-WorkingDirectory=/home/harnamc/Projects/home-blink
-ExecStart=/home/harnamc/Projects/home-blink/venv/bin/python /home/harnamc/Projects/home-blink/src/home_blink/main.py
+WorkingDirectory=/home/{USERNAME}/Projects/home-blink
+ExecStart=/home/{USERNAME}/Projects/home-blink/venv/bin/python -m home_blink.main
 Restart=always
 RestartSec=5
 
-StandardOutput=append:/home/harnamc/Projects/home-blink/logs/home-blink.log
-StandardError=append:/home/harnamc/Projects/home-blink/logs/home-blink.log
+StandardOutput=append:/home/{USERNAME}/Projects/home-blink/log/home-blink.og
+StandardError=append:/home/{USERNAME}/Projects/home-blink/log/home-blink.log
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
