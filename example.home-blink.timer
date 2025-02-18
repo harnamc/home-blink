@@ -1,9 +1,9 @@
 [Unit]
-Description=Run Home Blink Service every 5 minutes
+Description=Run Home Blink Service every 15 minutes
 
 [Timer]
 OnBootSec=1min
-OnUnitActiveSec=5min
+OnUnitActiveSec=15min
 Unit=home-blink.service
 
 [Install]

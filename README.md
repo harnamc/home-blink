@@ -1,6 +1,6 @@
 # Home Blink Service
 
-This project is a Python application designed to interact with Blink devices.
+This project is a Python application designed to interact with Blink devices. Currently, it updates the thumbnails of all camera in the Blink account.
 
 ## Prerequisites
 
@@ -20,7 +20,22 @@ git clone git@github.com:harnamc/home-blink.git
 cd home-blink
 ```
 
-### 2. Create a Python Virtual Environment and Install Requirements
+### 3. Create `credentials.json` File in Project Root
+
+```bash
+cp example.credentials.json credentials.json
+```
+
+- Replace the `username` and `password` with your Blink account details.
+
+```json
+{
+    "username": "username",
+    "password": "password"
+}
+```
+
+### 4. Create a Python Virtual Environment and Install Requirements
 
 ```bash
 python3 -m venv venv
@@ -28,7 +43,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Configure `systemd` to Run the Script Every 5 Minutes
+### 4. Configure `systemd` to Run the Script Every 15 Minutes
 
 - Create a file named `home-blink.service` with the following content and replace `{USERNAME}` with your own username.
 
@@ -39,7 +54,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/home/{USERNAME}/Projects/home-blink
-ExecStart=/home/{USERNAME}/Projects/home-blink/venv/bin/python -m home_blink.main
+ExecStart=/home/{USERNAME}/Projects/home-blink/venv/bin/python /home/{USERNAME}/Projects/home-blink/src/home_blink/main.py
 Restart=always
 RestartSec=5
 
@@ -54,11 +69,11 @@ WantedBy=multi-user.target
 
 ```bash
 [Unit]
-Description=Run Home Blink Service every 5 minutes
+Description=Run Home Blink Service every 15 minutes
 
 [Timer]
 OnBootSec=1min
-OnUnitActiveSec=5min
+OnUnitActiveSec=15min
 Unit=home-blink.service
 
 [Install]
@@ -72,7 +87,7 @@ cp home-blink.service /home/{USERNAME}/.config/systemd/user
 cp home-blink.timer /home/{USERNAME}/.config/systemd/user
 ```
 
-### 4. Enable and Start the Service
+### 5. Enable and Start the Service
 
 ```bash
 systemctl --user daemon-reload
@@ -80,7 +95,7 @@ systemctl --user enable home-blink.timer
 systemctl --user start home-blink.timer
 ```
 
-### 5. Verify Your Setup
+### 6. Verify Your Setup
 
 ```bash
 systemctl --user status home-blink.timer
@@ -88,7 +103,7 @@ journalctl --user-unit home-blink.service --follow
 cat ~/Projects/home-blink/log/home-blink.log
 ```
 
-### 6. Updating the Service
+### 7. Updating the Service
 
 When you pull new changes from GitHub, update your repository and virtual environment as follows:
 

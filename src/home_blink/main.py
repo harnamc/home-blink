@@ -12,13 +12,20 @@ CREDENTIALS = "credentials.json"
 
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    filename=os.path.join(os.path.dirname(__file__), "main.log"),
-    filemode="a",
+    handlers=[
+        logging.FileHandler(
+            os.path.join(
+                os.path.dirname(__file__), "..", "..", "log", "home-blink.log"
+            ),
+            mode="a",
+        ),
+        logging.StreamHandler(),
+    ],
 )
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("home_blink.main")
 
 
 async def main():
@@ -35,7 +42,7 @@ async def main():
             try:
                 camera_attributes = camera.attributes
 
-                logger.info(
+                logger.debug(
                     "Camera details for %s: Thumbnail=%s, Video=%s, Temperature=%s, Battery=%s, WiFi Signal=%s",
                     camera_name,
                     camera_attributes.get("thumbnail"),
@@ -66,7 +73,7 @@ async def main():
 
             logger.info("==== END Processing Camera: %s ====", camera_name)
 
-            await sleep(5)
+            await sleep(10)
 
 
 if __name__ == "__main__":
