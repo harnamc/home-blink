@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/home/{USERNAME}/Projects/home-blink
-ExecStart=/home/{USERNAME}/Projects/home-blink/venv/bin/python -m home_blink.main /home/{USERNAME}/Projects/home-blink/src/home_blink/main.py
+ExecStart=/home/{USERNAME}/Projects/home-blink/venv/bin/python /home/{USERNAME}/Projects/home-blink/src/home_blink/main.py
 Restart=always
 RestartSec=5
 
@@ -12,4 +12,4 @@ StandardOutput=append:/home/{USERNAME}/Projects/home-blink/log/home-blink.log
 StandardError=append:/home/{USERNAME}/Projects/home-blink/log/home-blink.log
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
