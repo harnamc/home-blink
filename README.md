@@ -91,16 +91,13 @@ cp home-blink.timer /home/{USERNAME}/.config/systemd/user
 
 ```bash
 systemctl --user daemon-reload
-systemctl --user enable home-blink.service
 systemctl --user enable home-blink.timer
-systemctl --user start home-blink.service
 systemctl --user start home-blink.timer
 ```
 
 ### 6. Verify Your Setup
 
 ```bash
-systemctl --user status home-blink.service
 systemctl --user status home-blink.timer
 journalctl --user-unit home-blink.service --follow
 cat ~/Projects/home-blink/log/home-blink.log
@@ -121,7 +118,6 @@ Then, reload the user systemd configuration and restart the timer:
 
 ```bash
 systemctl --user daemon-reload
-systemctl --user restart home-blink.service
 systemctl --user restart home-blink.timer
 ```
 
