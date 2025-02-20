@@ -1,13 +1,12 @@
 # Home Blink Service
 
-This project is a Python application designed to interact with Blink devices. Currently, it updates the thumbnails of all camera in the Blink account.
+This project is a Python application designed to interact with Blink devices. Currently, it updates the thumbnails of all camera in the Blink account. The setup will create a `systemd` service and timer to run evert 15 minutes. The properties can be modified for your own use case.
 
 ## Prerequisites
 
 - Linux system with systemd (e.g., RHEL 9, CentOS, Ubuntu)
 - Python 3.x installed
 - Git installed
-- Sudo privileges (for system-wide configuration) **or** use user-level systemd if preferred
 
 ## Setup
 
@@ -38,46 +37,12 @@ Follow the prompt and enter `username`, `password` and OTP if it is setup. This 
 
 ### 4. Configure `systemd` to Run the Script Every 15 Minutes
 
-- Create a file named `home-blink.service` with the following content and replace `{USERNAME}` with your own username.
+- Update the `example.home-blink.service` by replace `{USERNAME}` with your own username. Your repo location could be different, just make sure it matches to where your source code is.
+- Copy the Files to the user `systemd` directory.
 
 ```bash
-[Unit]
-Description=Home Blink Python Service
-After=network.target
-
-[Service]
-WorkingDirectory=/home/{USERNAME}/Projects/home-blink
-ExecStart=/home/{USERNAME}/Projects/home-blink/venv/bin/python /home/{USERNAME}/Projects/home-blink/src/home_blink/main.py
-Restart=always
-RestartSec=5
-
-StandardOutput=append:/home/{USERNAME}/Projects/home-blink/log/home-blink.og
-StandardError=append:/home/{USERNAME}/Projects/home-blink/log/home-blink.log
-
-[Install]
-WantedBy=multi-user.target
-```
-
-- Create a file named `home-blink.timer` with the following content:
-
-```bash
-[Unit]
-Description=Run Home Blink Service every 15 minutes
-
-[Timer]
-OnBootSec=1min
-OnUnitActiveSec=15min
-Unit=home-blink.service
-
-[Install]
-WantedBy=timers.target
-```
-
-- Copy the Files to the user `systemd` directory, replace `{USERNAME}` with your username.
-
-```bash
-cp home-blink.service /home/{USERNAME}/.config/systemd/user
-cp home-blink.timer /home/{USERNAME}/.config/systemd/user
+cp example.home-blink.service ~/.config/systemd/user/home-blink.service
+cp example.home-blink.timer ~/.config/systemd/user/home-blink.timer
 ```
 
 ### 5. Enable and Start the Service
@@ -93,21 +58,20 @@ systemctl --user start home-blink.timer
 ```bash
 systemctl --user status home-blink.timer
 journalctl --user-unit home-blink.service --follow
-cat ~/Projects/home-blink/log/home-blink.log
 ```
 
-### 7. Updating the Service
+## Updating the Service
 
 When you pull new changes from GitHub, update your repository and virtual environment as follows:
 
 ```bash
-cd ~/Projects/home-blink
+cd ~/Projects/home-blink # or where you cloned the repo.
 git pull
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Then, reload the user systemd configuration and restart the timer:
+Then, reload the user `systemd` configuration and restart the timer:
 
 ```bash
 systemctl --user daemon-reload
