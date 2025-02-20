@@ -1,31 +1,14 @@
 import asyncio
-import logging
-import os
 from asyncio import sleep
 
 from aiohttp import ClientSession
 from blinkpy.auth import Auth
 from blinkpy.blinkpy import Blink
 from blinkpy.helpers.util import json_load
+from config import CREDENTIALS
+from logger import get_logger
 
-CREDENTIALS = "credentials.json"
-
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(
-            os.path.join(
-                os.path.dirname(__file__), "..", "..", "log", "home-blink.log"
-            ),
-            mode="a",
-        ),
-        logging.StreamHandler(),
-    ],
-)
-
-logger = logging.getLogger("home_blink.main")
+logger = get_logger("home_blink.main")
 
 
 async def main():

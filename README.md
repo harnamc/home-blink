@@ -20,28 +20,21 @@ git clone git@github.com:harnamc/home-blink.git
 cd home-blink
 ```
 
-### 3. Create `credentials.json` File in Project Root
-
-```bash
-cp example.credentials.json credentials.json
-```
-
-- Replace the `username` and `password` with your Blink account details.
-
-```json
-{
-    "username": "username",
-    "password": "password"
-}
-```
-
-### 4. Create a Python Virtual Environment and Install Requirements
+### 2. Create a Python Virtual Environment and Install Requirements
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
+
+### 3. Run `setup.py` Script to Generate `credentials.json`
+
+```bash
+python python ./src/home_blink/setup.py
+```
+
+Follow the prompt and enter `username`, `password` and OTP if it is setup. This script will generate/update the `credentials.json` file.
 
 ### 4. Configure `systemd` to Run the Script Every 15 Minutes
 

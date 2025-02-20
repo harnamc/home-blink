@@ -5,9 +5,6 @@ After=network.target
 [Service]
 WorkingDirectory=/home/{USERNAME}/Projects/home-blink
 ExecStart=/home/{USERNAME}/Projects/home-blink/venv/bin/python /home/{USERNAME}/Projects/home-blink/src/home_blink/main.py
-Restart=always
-RestartSec=5
-
 StandardOutput=append:/home/{USERNAME}/Projects/home-blink/log/home-blink.log
 StandardError=append:/home/{USERNAME}/Projects/home-blink/log/home-blink.log
 
