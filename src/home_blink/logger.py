@@ -1,5 +1,4 @@
 import logging
-import os
 
 
 def get_logger(name: str):
@@ -7,12 +6,6 @@ def get_logger(name: str):
         level=logging.INFO,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         handlers=[
-            logging.FileHandler(
-                os.path.join(
-                    os.path.dirname(__file__), "..", "..", "log", "home-blink.log"
-                ),
-                mode="a",
-            ),
             logging.StreamHandler(),
         ],
     )
