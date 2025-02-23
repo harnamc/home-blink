@@ -22,6 +22,8 @@ async def main():
 
         for camera_name, camera in blink.cameras.items():
             logger.info("==== START Processing Camera: %s ====", camera_name)
+            await sleep(10)
+
             try:
                 camera_attributes = camera.attributes
 
@@ -44,6 +46,8 @@ async def main():
                     "Updating thumbnail for %s with ID: %s", camera_name, thumbnail_id
                 )
 
+                await sleep(10)
+
                 await camera.update_images(
                     {"thumbnail": thumbnail_id}, force_cache=True
                 )
@@ -55,8 +59,6 @@ async def main():
                 )
 
             logger.info("==== END Processing Camera: %s ====", camera_name)
-
-            await sleep(10)
 
 
 if __name__ == "__main__":
