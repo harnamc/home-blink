@@ -30,7 +30,7 @@ pip install -r requirements.txt
 ### 3. Run `setup.py` Script to Generate `credentials.json`
 
 ```bash
-python python ./src/home_blink/setup.py
+python ./src/home_blink/setup.py
 ```
 
 Follow the prompt and enter `username`, `password` and OTP if it is setup. This script will generate/update the `credentials.json` file.

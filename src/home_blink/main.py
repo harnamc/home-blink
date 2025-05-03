@@ -46,7 +46,7 @@ async def main():
                     "Updating thumbnail for %s with ID: %s", camera_name, thumbnail_id
                 )
 
-                await sleep(10)
+                await sleep(30)
 
                 await camera.update_images(
                     {"thumbnail": thumbnail_id}, force_cache=True
